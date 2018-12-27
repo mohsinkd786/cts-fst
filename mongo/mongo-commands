@@ -1,0 +1,82 @@
+list of commands
+
+1. Download mongo for your env
+https://www.mongodb.com/download-center/community
+
+2. Install follow the instructions based on the environment
+3. go to mongo db installation folder:
+		cd mongodb-xxx 
+4. create data folder 
+	UNIX: mkdir data
+	WINDOWS: use UI
+
+5. start mongodb
+	UNIX:	   sudo bin/mongodb --dbpath=/data
+	WINDOWS:   bin/mongodb --dbpath=data
+
+6. access mongo client:
+	UNIX:	   sudo ./mongo
+	WINDOWS:   mongo	
+7. view list of databases:
+		show dbs;
+
+8. Create/ change database:
+		use my-sample-db;
+
+9. Create collection:
+		db.createColection("sample");
+		
+10. View list of collections:
+		show collections;
+
+11. Delete a collection:
+		db.sample.drop();
+
+12. Delete a database:
+		db.dropDatabase(); // this command will work, when the user is inside the database
+
+13. Add a document to collection:
+		db.sample.insert({name:"Mohsin",email:"mohs@gmail.com"});
+14. Adding Bulk documents:
+		db.sample.insert([{name:"John",email:"joh@gmail.com"},{name:"Roger",email:"rog@gmail.com"},{name:"Tim",email:"tim@gmail.com"}]); 
+
+15. Fetch documents:
+		db.sample.find();
+
+16. Fetch documents / cleaner:
+		db.sample.find().pretty();
+
+17. Fetch by Name:
+		db.sample.find({name:"Tim"}).pretty();
+
+18. Update a document:
+		db.sample.update({name:"Mohsin"},{$set:{email:"mk@yahoo.com"}});
+19. Update document with new field:
+		db.sample.update({name:"Mohsin"},{$set:{phone:123456789}});
+20. Remove a document:
+		db.sample.remove({name:"Roger"});
+
+21. Remove multiple documents meeting the criteria:
+		db.sample.remove({name:"Tim",1});
+
+22. Add bulk users:
+		
+db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100000},{fname:"Bob",lname:"Johnson",email:"bob@gmail.com",salary:125000},{fname:"Raghu",lname:"Raj",email:"raghu@gmail.com",salary:50000},{fname:"Adam",lname:"Sandler",email:"adam@gmail.com",salary:24000}]);
+
+23. Update an existing value:
+		db.users.update({fname:"Adam"},{$inc:{salary:10000}}); //This shall increment the existing salary
+
+24. Fetch all users with salary greater than 50k:
+		db.users.find({salary:{$gt:50000}}).pretty();
+
+25. Fetch all users with salary greater than 50k or equal to:
+		db.users.find({salary:{$gte:50000}}).pretty();
+
+26. Fetch all users with salary lesser than 50k:
+		db.users.find({salary:{$lt:50000}}).pretty();
+
+27. Fetch all users with salary lesser than 50k or equal to:
+		db.users.find({salary:{$lte:50000}}).pretty();
+
+28. Fetch all users with salary not equal to 50k:
+		db.users.find({salary:{$ne:50000}}).pretty();
