@@ -95,3 +95,15 @@ db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100
 
 33. Find and modify the user:
 		db.users.findAndModify({ query:{fname:"Mohsin"},update:{$set:{eaddress:"mk@aol.com"}});
+
+34. Find users with multiple conditions-AND:
+		db.users.find({$and:[{active:true},{salary:{$gt:50000}}]});
+
+35. Find users with multiple conditions-OR:
+		db.users.find({$or:[{active:true},{salary:{$gt:50000}}]});
+
+36. Fetch only first 2 documents:
+		db.users.find({}).limit(2).pretty();
+
+37. Skip first document:
+		db.users.find({}).limit(2).skip(1).pretty();
