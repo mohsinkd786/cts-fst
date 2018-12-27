@@ -90,4 +90,8 @@ db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100
 31. Rename the email field to address:
 		db.users.updateMany({},{$rename:{"email":"eaddress"}}); 
 
-32. 
+32. Upsert a new User:
+		db.users.update({fname:"Moh"},{$set:{active:false}},{upsert:true}); //shall create the doc,if none match,else will modify the existing one
+
+33. Find and modify the user:
+		db.users.findAndModify({ query:{fname:"Mohsin"},update:{$set:{eaddress:"mk@aol.com"}});
