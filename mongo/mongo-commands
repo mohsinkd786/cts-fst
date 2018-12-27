@@ -107,3 +107,23 @@ db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100
 
 37. Skip first document:
 		db.users.find({}).limit(2).skip(1).pretty();
+
+38. Skip specific fields:
+		db.users.find({},{salary:0,_id:0}).pretty();
+
+39. Fetch sorted documents:
+		db.users.find({},{fname:1,lname:1,_id:0}).sort({fname:1}).pretty(); //ascending order: 1, desc : -1
+
+40. Get the total salary of all the users:
+		db.users.aggregate([{$match:{} },{$group:{_id:0,totalSalary:{$sum:"$salary"}}}]);
+
+41. Get the maximum salary amongst all the users:
+		db.users.aggregate([{$match:{} },{$group:{_id:0,highestSalary:{$max:"$salary"}}}]);
+
+42. Get the lowest salary amongst the users:
+		db.users.aggregate([{$match:{} },{$group:{_id:0,lowestSalary:{$min:"$salary"}}}]);
+
+43. Get the average salary amongst the users:
+		db.users.aggregate([{$match:{} },{$group:{_id:0,averageSalary:{$avg:"$salary"}}}]);
+
+44. 
