@@ -126,4 +126,5 @@ db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100
 43. Get the average salary amongst the users:
 		db.users.aggregate([{$match:{} },{$group:{_id:0,averageSalary:{$avg:"$salary"}}}]);
 
-44. 
+44. Get count of documents with aggregate function:
+		db.users.aggregate([{$group:{_id:0,total:{$sum:1}}}]);
