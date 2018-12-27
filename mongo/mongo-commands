@@ -80,3 +80,11 @@ db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100
 
 28. Fetch all users with salary not equal to 50k:
 		db.users.find({salary:{$ne:50000}}).pretty();
+
+29. Fetch only the users with salary field:
+		db.users.find({salary:{$exists:true}});;
+
+30. Fetch users that have salary field and in range of 100k-150k:
+		db.users.find({salary:{$exists:true,$in:[100000,1500000]}});
+
+31. 
