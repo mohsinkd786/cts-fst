@@ -169,7 +169,143 @@ db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100
 
         	// this use has limited access & cannot operate beyond that
 
-52. 
+52. Manage relationships via:
+		Embedded References:
+		db.productCategories.insertMany([
+    {
+        _id:001,
+        name: "Electronics"
+    },
+    {
+        _id:002,
+        name: "Computers"
+    },
+    {
+        _id:003,
+        name: "Phones"
+    },
+    {
+        _id:004,
+        name: "BatteryDriven"
+    }
+]);
 
+// CReate PRODUCTS NOW
+	db.products.insertMany([
+    {
+        _id: 1,
+        name:"Macbook Air",
+        make:"Apple",
+        price: 60000,
+        category: [001,002,004]
+    },
+    {
+        _id: 2,
+        name:"Macbook Pro",
+        make:"Apple",
+        price: 100000,
+        category: [001,002,004]
+    },
+    {
+        _id: 3,
+        name:"Thinkpad",
+        make:"Lenovo",
+        price: 40000,
+        category: [001,002,004]
+    },
+    {
+        _id: 4,
+        name:"Nexus",
+        make:"Google",
+        price: 90000,
+        category: [001,003,004]
+    }
+]);
+
+53. Manage relationships via:
+		Embedded Documents:
+		db.ecommerce.insertMany([
+    {
+        _id:1,
+        name: "Flipkart",
+        website: "flipkart.com",
+        turnover: 3000000000,
+        currency: "INR",
+        employees:[
+            {
+                id: 1,
+                name: "John",
+                email: "john@flipkart.com",
+                salary: 1000000
+            },
+            {
+                id: 2,
+                name: "Bob",
+                email: "Bob@flipkart.com",
+                salary: 900000
+            },
+            {
+                id: 3,
+                name: "Roger",
+                email: "roger@flipkart.com",
+                salary: 550000
+            }
+        ]
+    },
+    {
+        _id:2,
+        name: "Amazon",
+        website: "amazon.com",
+        turnover: 10000000000,
+        currency: "$",
+        employees:[
+            {
+                id: 1,
+                name: "Michael",
+                email: "michael@amazon.com",
+                salary: 1000000
+            },
+            {
+                id: 2,
+                name: "Tim",
+                email: "Tim@amazon.com",
+                salary: 910200
+            },
+            {
+                id: 3,
+                name: "Adams",
+                email: "adams@amazon.com",
+                salary: 750000
+            }
+        ]
+    }
+]);
+
+db.ecommerce.update({_id:2},
+    {
+        $set:{
+            region:{
+                zone: "India",
+                locations: 700
+            }
+        }
+    }
+);
+
+54. Fetch All EMployees with Salary on or above 750000 Embedded Documents:
+
+	db.ecommerce.find({"employees.salary":750000}).pretty();
+
+55. Fetch Data from parent & child:
+	db.products.aggregate([
+    {
+        $lookup:{
+            from: "productCategories",
+            localField: "category",
+            foreignField: "_id",
+            as : "categories"
+        }
+    }
+]);
 
 
