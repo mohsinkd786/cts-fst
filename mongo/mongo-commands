@@ -128,3 +128,48 @@ db.users.insert([{fname:"John",lname:"Stevens",email:"john@gmail.com",salary:100
 
 44. Get count of documents with aggregate function:
 		db.users.aggregate([{$group:{_id:0,total:{$sum:1}}}]);
+45. Create Index:
+		db.createIndex({name:-1}); // asc: 1 , desc:-1
+
+46. Create Compound Index;
+		db.users.createIndex({name:-1,email:1});
+
+47. Fetch All Indexes:
+		db.users.getIndexes();
+
+48. Delete an Index:
+		db.users.dropIndex({name: -1});
+
+49. Delete all Indexes:
+		db.users.dropIndexes();
+
+50. Enable Authentication:
+		use admin;
+		db.createUser(
+ 			 {
+			    user: "admin",
+			    pwd: "123",
+			    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+			  }
+			);
+
+			//restart mongod
+			mongod --auth --dbpath=data/
+
+			// access mongo client
+			mongo -u "admin" -p "123" --authenticationDatabase "admin"
+
+51. Enable database user:
+		db.createUser({
+    		user:"dbUser",
+    		pwd:"pass@123",
+    		roles:[
+        		{role: "readWrite",db:"my-db"}
+        	]});
+
+        	// this use has limited access & cannot operate beyond that
+
+52. 
+
+
+
