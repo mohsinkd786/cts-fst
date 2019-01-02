@@ -35,6 +35,42 @@ server.get('/employees/findByEmail/:email',(rq,rs)=>{
  
     });
 });
+// fetch by city
+server.get('/employees/findByCity/:city',(rq,rs)=>{
+    rs.setHeader('content-type','application/json');
+    const city = rq.params.city;
+    employeeService._byCity(city,(err,data)=>{
+        if(err)
+            rs.end(JSON.stringify({ message : 'Unable process the request', errorCode: 400}));
+        else
+            rs.end(JSON.stringify(data));
+ 
+    });
+});
+// fetch by State
+server.get('/employees/findByState/:state',(rq,rs)=>{
+    rs.setHeader('content-type','application/json');
+    const state = rq.params.state;
+    employeeService._byState(state,(err,data)=>{
+        if(err)
+            rs.end(JSON.stringify({ message : 'Unable process the request', errorCode: 400}));
+        else
+            rs.end(JSON.stringify(data));
+ 
+    });
+});
+// fetch by zip
+server.get('/employees/findByZip/:zip',(rq,rs)=>{
+    rs.setHeader('content-type','application/json');
+    const zip = rq.params.zip;
+    employeeService._byZip(zip,(err,data)=>{
+        if(err)
+            rs.end(JSON.stringify({ message : 'Unable process the request', errorCode: 400}));
+        else
+            rs.end(JSON.stringify(data));
+ 
+    });
+});
 
 // fetch all with salary greater than
 server.get('/employees/findBySalaryGreater/:salary',(rq,rs)=>{
@@ -75,7 +111,14 @@ server.post('/employees/add',(rq,rs)=>{
 
 // delete an employee by email
 server.post('/employees/delete/:email',(rq,rs)=>{
-    
+    rs.setHeader('content-type','application/json');
+    const email = rq.params.email;
+    employeeService._delByEmail(email,(err,response)=>{
+        if(err)
+            rs.end(JSON.stringify({ message : 'Unable to add the employee', errorCode: 400}));
+        else
+            rs.end(JSON.stringify({ message : 'Employee Deleted Successfully'}));
+    });
 });
 // listener port
 const port = 4211;
