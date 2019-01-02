@@ -12,10 +12,24 @@ const address = new Schema({
 });
 const employeeSchema = new Schema(
     {
-        _id:Number,
-        name:String,
+        _id:{
+            type: Number,
+            min : [1,'Please keep Id above 1'],
+            max : [100,'Please keep the Id below 100'],
+            required : [true,'Id cannot be left blank']
+        },
+        name:{
+            type: String,
+            required: [true,'Name Cannot be left blank']
+        },
         phone:Number,
-        email:String,
+        email:{
+            type: String,
+            trim: true,
+            required: [true,'Email cannot be left blank'],
+            match: [	
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,'Invalid Email Specified']  
+        },
         salary:Number,
         addresses: [address]
     });

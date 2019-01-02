@@ -103,7 +103,7 @@ server.post('/employees/add',(rq,rs)=>{
     const empObj = rq.body;
     employeeService._add(empObj,(err)=>{
         if(err)
-            rs.end(JSON.stringify({ message : 'Unable to add the employee', errorCode: 400}));
+            rs.end(JSON.stringify({ message : 'Unable to add the employee '+ err, errorCode: 400}));
         else
             rs.end(JSON.stringify({ message : 'Employee Added Successfully'}));
     })
