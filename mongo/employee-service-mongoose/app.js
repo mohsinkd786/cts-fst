@@ -1,19 +1,16 @@
 const express = require('express');
-const server = express();
-const parser = require('body-parser');
+const app = express();
+const router = express.Router();
+//const server = express();
 const employeeService = require('./services/employeeService');
 
-server.use(parser.json());
-server.use(parser.urlencoded({
-    extended : true
-}));
 // status service
-server.get('/status',(req,res)=>{
+router.get('/status',(req,res)=>{
     res.send('Service is running \n');
 });
 
 //fetch all employees
-server.get('/employees',(req,res)=>{
+router.get('/employees',(req,res)=>{
     res.setHeader('content-type','application/json');
     employeeService._all((err,data)=>{
         if(err)
@@ -24,7 +21,7 @@ server.get('/employees',(req,res)=>{
 });
 
 // fetch by email
-server.get('/employees/findByEmail/:email',(rq,rs)=>{
+router.get('/employees/findByEmail/:email',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const email = rq.params.email;
     employeeService._byEmail(email,(err,data)=>{
@@ -36,7 +33,7 @@ server.get('/employees/findByEmail/:email',(rq,rs)=>{
     });
 });
 // fetch by city
-server.get('/employees/findByCity/:city',(rq,rs)=>{
+router.get('/employees/findByCity/:city',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const city = rq.params.city;
     employeeService._byCity(city,(err,data)=>{
@@ -48,7 +45,7 @@ server.get('/employees/findByCity/:city',(rq,rs)=>{
     });
 });
 // fetch by State
-server.get('/employees/findByState/:state',(rq,rs)=>{
+router.get('/employees/findByState/:state',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const state = rq.params.state;
     employeeService._byState(state,(err,data)=>{
@@ -60,7 +57,7 @@ server.get('/employees/findByState/:state',(rq,rs)=>{
     });
 });
 // fetch by zip
-server.get('/employees/findByZip/:zip',(rq,rs)=>{
+router.get('/employees/findByZip/:zip',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const zip = rq.params.zip;
     employeeService._byZip(zip,(err,data)=>{
@@ -73,7 +70,7 @@ server.get('/employees/findByZip/:zip',(rq,rs)=>{
 });
 
 // fetch all with salary greater than
-server.get('/employees/findBySalaryGreater/:salary',(rq,rs)=>{
+router.get('/employees/findBySalaryGreater/:salary',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const salary = rq.params.salary;
     employeeService._bySalaryGreater(salary,(err,data)=>{
@@ -86,7 +83,7 @@ server.get('/employees/findBySalaryGreater/:salary',(rq,rs)=>{
 });
 
 // update employee by id
-server.put('/employees/update',(rq,rs)=>{
+router.put('/employees/update',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const empObj = rq.body;
     employeeService._update(empObj,(err,response)=>{
@@ -98,7 +95,7 @@ server.put('/employees/update',(rq,rs)=>{
 });
 
 // Add an employee
-server.post('/employees/add',(rq,rs)=>{
+router.post('/employees/add',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const empObj = rq.body;
     employeeService._add(empObj,(err)=>{
@@ -110,7 +107,7 @@ server.post('/employees/add',(rq,rs)=>{
 });
 
 // delete an employee by email
-server.post('/employees/delete/:email',(rq,rs)=>{
+router.post('/employees/delete/:email',(rq,rs)=>{
     rs.setHeader('content-type','application/json');
     const email = rq.params.email;
     employeeService._delByEmail(email,(err,response)=>{
@@ -120,8 +117,16 @@ server.post('/employees/delete/:email',(rq,rs)=>{
             rs.end(JSON.stringify({ message : 'Employee Deleted Successfully'}));
     });
 });
+app.route('/login').get((rq,rs)=>{
+    rs.send(JSON.stringify({msg:'Please Login'}));
+}).post((rq,rs)=>{
+    rs.send(JSON.stringify({msg:'Logged In Successfully'}));
+})
+
+app.use('/employee-service',router);
+
 // listener port
-const port = 4211;
-server.listen(port,()=>{
+const port = 4200;
+app.listen(port,()=>{
     console.log(`Server started at ${port}`);
 });
