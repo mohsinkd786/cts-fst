@@ -24,10 +24,14 @@ const signup = (user,callback)=>{
     });
     User.create(userObj,(err,response)=>{
         callback(err,response);
-    });
-    
+    });   
 }
-
+const findUser = (email,callback)=>{
+    User.findOne({ email: email},(err,data)=>{
+        callback(err,data);
+    });
+}
 module.exports= {
-    signup : signup
+    signup : signup,
+    findUser : findUser
 }
