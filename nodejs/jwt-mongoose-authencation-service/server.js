@@ -3,6 +3,9 @@ const server = express();
 const parser = require('body-parser');
 const api = require('./api');
 const jwt = require('jsonwebtoken');
+const secret = require('./secret');
+const bcrypt = require('bcrypt');
+const securityService = require('./securityService');
 // parser
 server.use(parser.json());
 server.use(parser.urlencoded({ extended: true}));
@@ -14,27 +17,41 @@ server.get('/status',(req,res)=>{
 // authenticate & generate valid token
 server.post('/authenticate',(req,res)=>{
     res.setHeader('content-type','application/json');
-    const _jwtToken = jwt.sign(
-        {
-            email: 'mo@global.com',
-            pass: 'pass@123'
-        },
-      'my-secret-is-secured',
-      {
-          expiresIn: '1h'
-      }  
-    );
-    res.json({
-        message: 'Token generated successfully',
-        token: _jwtToken
-    })
+    securityService.fetchRegisteredUser(req.body.email,req.body.password,(err,data)=>{
+        if(err){
+            res.statusCode(401).json({
+                message: 'Unauthorized user,please try with valid credentials'
+            });
+        }else{
+            const isValidCredentials = bcrypt.compareSync(req.body.password,data.password);
+            if(isValidCredentials){
+                const _jwtToken = jwt.sign(
+                    {
+                        email: 'mo@global.com',
+                        pass: 'pass@123'
+                    },
+                secret.privateKey,
+                {
+                    expiresIn: '1h'
+                }  
+                );
+                res.json({
+                    message: 'Token generated successfully',
+                    token: _jwtToken
+                })
+            }else{
+                res.json({
+                    message: 'Invalid credentials,please try with valid ones'
+                })
+            }
+        }
+    });
 });
 // secure the endpoints
 server.use((req,res,next)=>{
     const token = req.headers['bearer'];
-    //console.log('##### ',token);
-    if(token !== undefined || token !== ''){
-        jwt.verify(token,'my-secret-is-secured',(err,decodedStr)=>{
+    if(token !== undefined){
+        jwt.verify(token,secret.privateKey,(err,decodedStr)=>{
             if(err){
                 return res.json({
                     message: 'Invalid token'
