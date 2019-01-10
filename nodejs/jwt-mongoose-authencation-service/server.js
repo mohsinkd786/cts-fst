@@ -27,14 +27,21 @@ server.post('/authenticate',(req,res)=>{
             if(isValidCredentials){
                 const _jwtToken = jwt.sign(
                     {
-                        email: 'mo@global.com',
-                        pass: 'pass@123'
+                        email: req.body.email
                     },
                 secret.privateKey,
                 {
                     expiresIn: '1h'
                 }  
                 );
+                securityService.setUserToken(req.body.email,_jwtToken,(err,response)=>{
+                    if(err){
+                        res.status(400).json({
+                        message: 'Unable to process the request,please try again later'
+                        });
+                    }
+                });
+
                 res.json({
                     message: 'Token generated successfully',
                     token: _jwtToken
@@ -47,6 +54,42 @@ server.post('/authenticate',(req,res)=>{
         }
     });
 });
+// refreshing the token
+server.post('/token/refresh',(req,res)=>{
+    //res.setHeader('content-type','application/json');
+    // get the existing token
+    const token = req.body.token;
+    const email = req.body.email;
+    const isValidToken = jwt.verify(token,secret.privateKey);
+    console.log(isValidToken);
+    if(isValidToken){
+        const _jwtRefreshToken = jwt.sign(
+            {
+                email: req.body.email
+            },
+            secret.privateKey,
+            {
+                expiresIn: '1h'
+            }     
+        );
+        securityService.updateUserToken(email,_jwtRefreshToken,(err,response)=>{
+            if(err){
+                res.status(400).json({
+                    message: 'Unable to process the request,please try again later'
+                });
+            }else{
+                res.status(200).json({
+                    message: 'Refresh Token Generated Successfully',
+                    refreshToken: _jwtRefreshToken
+                });
+            }
+        })
+    }else{
+        return res.json({
+            message: 'Invalid token'
+        });
+    }
+})
 // secure the endpoints
 server.use((req,res,next)=>{
     const token = req.headers['bearer'];
