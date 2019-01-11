@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-jasmine-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sample.js",
+  "scripts": {
+    "jasmine": "./node_modules/.bin/jasmine",
+    "test": "./node_modules/.bin/jasmine-node spec"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.3.1",
+    "jasmine-node": "^1.16.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  }
+}
