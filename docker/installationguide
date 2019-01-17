@@ -2,4 +2,68 @@
 Download the docker from below
 https://docs.docker.com/v17.09/docker-for-windows/install/
 
-Follow the instructions in the wizard and the toolbox shall be downloaded
+# Follow the instructions in the wizard and the toolbox shall be downloaded
+# open the toolbox from the start menu
+# the docker console shall be visible
+# try the command
+docker run hello-world
+# it shall print in a Hello World message depicting docker is running
+
+# Docker on Linux
+# uninstall older versions
+sudo apt-get remove docker docker-engine docker.io
+
+# update the repo
+sudo apt-get update
+
+# allow access over https
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+# add docker key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# verify the docker key
+sudo apt-key fingerprint 0EBFCD88
+
+# Add docker repo
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+# Install docker
+sudo apt-get update
+sudo apt-get install docker-ce
+
+
+# get list of images
+docker images
+
+# remove an image
+docker rmi imageName / imageId
+
+# get list of containers
+docker ps
+
+# get list of containers running & stopped
+docker ps -a
+
+# remove a container
+docker rm containerName / containerId
+
+# download an image from docker hub
+docker pull imageName:tag
+
+# push an image to docker hub
+docker push imageName:tag
+
+# build an image
+docker build -t imageName:tag docker_file_location(use . in case the current directory)
+
+
+
+
