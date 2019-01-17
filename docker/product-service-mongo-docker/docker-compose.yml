@@ -1,0 +1,26 @@
+version: "2.2"
+services: 
+  product-service:
+    container_name: product-service
+    restart: always
+    build: . #where dockerfile is to be picked from this replaces docker build . cmd
+    ports:
+      - "5233:5233"
+    links: # dependent containers we can have multiple ones here
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+# start docker compose
+# docker-compose up
+# stop docker compose
+# docker-compose down
+# 1. it will automatically build the required images
+# 2. start the containers
+# 3. create the linking between containers
+# 4. it shall use Dockerfile internally no need to execute docker build command now
+# 5. This file shall pull the mongo image & spawn the container for it at 27017
+# 6. This file shall build the image for product-service & start the container at 5233
+# 7. This file shall create a link between mongo --> product-service containers for communications
