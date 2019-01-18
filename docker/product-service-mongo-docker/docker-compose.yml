@@ -1,11 +1,19 @@
-version: "2.2"
+version: "3"
 services: 
-  product-service:
-    container_name: product-service
-    restart: always
-    build: . #where dockerfile is to be picked from this replaces docker build . cmd
+  app:
+    #container_name: app
+    image: product-service
+    deploy:
+      mode: replicated # whether to create replications or not
+      replicas: 2 # how many containers should be spanned
+      resources:
+        limits:
+          cpus: "0.1" # 0.1 refers to 10% of cpu usage
+          #memory: 50M # 50mb of ram being allocated to the system
+      restart_policy:
+        condition: on-failure # enable auto restart in case of container failures or issues
     ports:
-      - "5233:5233"
+      - "1112:1112" # pass the ports to the Dockerfile
     links: # dependent containers we can have multiple ones here
       - mongo
   mongo:

@@ -5,6 +5,9 @@ const dao = require('./dao');
 server.use(parser.json());
 server.use(parser.urlencoded({extended:false}));
 
+server.get('/status',(req,res)=>{
+    res.send('Service is running');
+});
 // add a product
 server.post('/product/add',(req,res)=>{
     dao.addProduct({
@@ -40,7 +43,8 @@ server.get('/products',(req,res)=>{
         }
     });
 });
-const PORT = 5233;
+
+const PORT = 1112;
 server.listen(PORT,()=>{
     console.log(`Server started at ${PORT}`);
 });

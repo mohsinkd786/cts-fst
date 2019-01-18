@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://mongo';
+const url = 'mongodb://localhost:27017';
 const db = 'products';
 // add a product 
 const addProduct= (product,callback)=>{
