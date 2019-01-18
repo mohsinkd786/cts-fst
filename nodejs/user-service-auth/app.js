@@ -1,6 +1,7 @@
 const express = require('express');
 const server = express();
 //const router = express.Router();
+const jwt = require('jsonwebtoken');
 const parser = require('body-parser');
 const dao = require('./db/dao');
 const security = require('./security');
@@ -31,7 +32,12 @@ server.post('/register',(rq,rs)=>{
 server.post('/login',(req,res)=>{
     res.setHeader('content-type','application/json');
     const user = req.body;
-    const jwtToken = security._generate(user);
+    //const jwtToken = security._generate(user);
+    
+    const secret = 'this-is-my-personal-jwt-secret';
+    const jwtToken = jwt.sign({email: user.email,_id:user._id},secret,{expiresIn: '1h'});
+    console.log(jwtToken);
+
     res.status(200).json({
         msg : "Success",
         token: jwtToken

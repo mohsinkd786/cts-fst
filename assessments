@@ -1,0 +1,6 @@
+Nodejs :
+Assessment:
+Build a product service with restricted access to manage it, 
+making sure to deploy the services across multiple environments & 
+containerizing the sample via Docker
+

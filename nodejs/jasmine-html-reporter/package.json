@@ -1,0 +1,26 @@
+{
+  "name": "jasmine-html-reporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "jasmine-html-report": "jasmine --path=report.html",
+    "code-coverage": "istanbul cover --include-all-sources spec/specs.js -path=report.html   && istanbul check-coverage",
+    "test": "jasmine",
+    "karma": "karma start karma.conf.js"
+  },
+  "author": "Mohsin Khursheed",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "karma-jasmine-html-reporter": "^1.4.0"
+  },
+  "devDependencies": {
+    "jasmine": "^3.3.1",
+    "jasmine-node": "^1.16.2",
+    "jasmine-pretty-html-reporter": "^0.2.5",
+    "karma": "^3.1.4"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "jasmine-node-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jasmine",
+    "test-coverage": "istanbul cover --include-all-sources spec/specs.js && istanbul check-coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "jasmine": "^3.3.1",
+    "jasmine-console-reporter": "^3.1.0",
+    "jasmine-node": "^1.16.2"
+  }
+}
