@@ -1,0 +1,21 @@
+# push changes to git
+
+# setup a git based project /repository
+
+# add all (.) only specific files using (filename.extension)
+git add .
+
+# commiting the changes
+git commit -m 'your comments'
+
+# pushing changes to server / remote
+
+# Add a git remote
+git remote add name-of-remote http://172.18.2.18/url-project.git
+e.g. git remote add origin http://172.18.2.18/er.mohsinkhursheed/references.git
+
+# push changes to remote server
+
+git push --set-upstream name-of-remote branch-name
+e.g. git push --set-upstream origin master
+
