@@ -2,5 +2,10 @@ Nodejs :
 Assessment:
 Build a product service with restricted access to manage it, 
 making sure to deploy the services across multiple environments & 
-containerizing the sample via Docker
+containerizing the sample via Docker,make sure to validate your code with proper testing
 
+1. Node js 
+2. Jasmine + Istanbul for testing
+3. JWT
+4. Mongodb
+5. Docker 
